@@ -65,6 +65,7 @@ const renderRecived = (req, res) => {
     res.render('recibido')
 };
 
+
 const renderSignUp = (req, res) => {
     res.render('sign-up')
 };
@@ -91,6 +92,11 @@ const createSignUp = (req, res) => {
     });
 };
 
+
+const renderChart = (req, res) => {
+    res.render('Chart')
+};
+
 module.exports = {
     renderIndex,
     renderNewEntry,
@@ -100,4 +106,5 @@ module.exports = {
     renderRecived,
     renderSignUp,
     createSignUp 
+    renderChart
 }
