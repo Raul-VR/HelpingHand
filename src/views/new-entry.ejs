@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<div class="col-md-4 offset-md-4">
+    <h2 class="text-center">Reporte</h2>
+
+
+    <form method="post"> <!--role="form"-->
+        <div class="form-group">
+            <label for ="title">Username</label>
+            <input type="text" name="username" id="username" class="form-control" placeholder="Ingresa tu usuario" required>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Descripción</label>
+            <textarea name ="descripcion" id="descripcion" rows="3" class="for-control" placeholder="Ingresa una descripción de tu situación" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for ="title">Severidad</label>
+            <input type="text" name="severidad" id="severidad" class="form-control" placeholder="Indica la severidad entre 1 y 10" required>
+        </div>
+
+        <div class="form-group">
+            <label for ="title">Localización</label>
+            <input type="text" name="localizacion" id="localizacion" class="form-control" placeholder="Ingresa tu Localización" required>
+        </div>
+
+        <div class="form-group my-2">
+            <input type="submit" value="Enviar" class="btn btn-primary"
+        </div>
+        
+
+    </form>
+</div>
+
+<%- include('partials/footer') %>
