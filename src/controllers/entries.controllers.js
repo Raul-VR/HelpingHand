@@ -52,7 +52,7 @@ const createLogIn = (req, res) => {
 
         if (JSON.stringify(rows).length > 2) {
             // Redirect to home page
-            res.render('index')
+            res.render('index', {entries})
         } 	else {
             res.render('sign-up')
             console.log("error")
