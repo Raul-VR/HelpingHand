@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const{ renderIndex, renderNewEntry, createNewEntry, renderLogIn, createLogIn, renderRecived } = require('../controllers/entries.controllers')
+const{ renderIndex, renderNewEntry, createNewEntry, renderLogIn, createLogIn, renderRecived, renderSignUp, createSignUp } = require('../controllers/entries.controllers')
 
 router.get('/', renderIndex);
 
@@ -14,5 +14,9 @@ router.get('/log-in', renderLogIn);
 router.post('/log-in', createLogIn);
 
 router.get('/recibido', renderRecived);
+
+router.get('/sign-up', renderSignUp);
+
+router.post('/sign-up', createSignUp);
 
 module.exports = router;
