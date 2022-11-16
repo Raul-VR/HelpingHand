@@ -105,6 +105,6 @@ module.exports = {
     createLogIn,
     renderRecived,
     renderSignUp,
-    createSignUp 
+    createSignUp, 
     renderChart
 }
