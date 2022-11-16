@@ -1,27 +1,9 @@
 <%- include('partials/header') %>
 
-<%if (entries.length) { %>
+<div class="col-md-3 offset-md-5">
 
+        <a href="/log-in" class="btn btn-primary my-2" >Iniciar sesión </a>
 
-    <div class="col-md-4 offset-md-4"> 
-        <% entries.forEach(function(entry){ %>
-            <div class="card my-2">
-                <div class="card-header bg-primary text-white">
-                    <p> <%= entry.published %></p>
-                </div>
-                <div class="card-body">
-                    <p><%= entry.username %></p>
-                    <p><%= entry.descripcion %></p>
-                    <p><%= entry.severidad %></p>
-                    <p><%= entry.localizacion %></p>
-                </div>
-            </div>
-        <%})%>
-    </div>
-
-
-<% } else {%>
-    <p>No entries! <a href="/new-entry"> Add One!</a></p>
-<% } %>
+</div>
 
 <%- include('partials/footer') %>
