@@ -45,12 +45,15 @@ const createLogIn = (req, res) => {
 const renderRecived = (req, res) => {
     res.render('recibido')
 };
-
+const renderChart = (req, res) => {
+    res.render('Chart')
+};
 module.exports = {
     renderIndex,
     renderNewEntry,
     createNewEntry,
     renderLogIn,
     createLogIn,
-    renderRecived
+    renderRecived,
+    renderChart
 }
