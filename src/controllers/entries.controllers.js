@@ -122,7 +122,7 @@ const createSignUp = (req, res) => {
         //var sql ='INSERT INTO users (username, password, brigadista) VALUES (?,?,?)'
         var sql ='INSERT INTO brigades (username, password) VALUES (?,?)'
         var params =[req.body.username, req.body.password]
-        db.run(sql, params, function (err, result) {
+        db.all(sql, params, function (err, result) {
             if (err){
                 res.status(400).json({"error": err.message})
                 return;
@@ -136,7 +136,7 @@ const createSignUp = (req, res) => {
 
         var sql ='INSERT INTO users (username, password) VALUES (?,?)'
         var params =[req.body.username, req.body.password, req.body.brigadista]
-        db.run(sql, params, function (err, result) {
+        db.all(sql, params, function (err, result) {
             if (err){
                 res.status(400).json({"error": err.message})
                 return;
