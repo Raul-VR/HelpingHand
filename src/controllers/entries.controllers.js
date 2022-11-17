@@ -117,6 +117,7 @@ const createSignUp = (req, res) => {
     }
     console.log(req.body);
     console.log(req.body.brigadista);
+    /*
     if (req.body.brigadista){
 
         //var sql ='INSERT INTO users (username, password, brigadista) VALUES (?,?,?)'
@@ -133,9 +134,10 @@ const createSignUp = (req, res) => {
 
 
     } else {
+        */
 
         var sql ='INSERT INTO users (username, password) VALUES (?,?)'
-        var params =[req.body.username, req.body.password, req.body.brigadista]
+        var params =[req.body.username, req.body.password]
         db.run(sql, params, function (err, result) {
             if (err){
                 res.status(400).json({"error": err.message})
@@ -146,7 +148,7 @@ const createSignUp = (req, res) => {
             return;
         });
 
-    };
+    //};
 };
 
 
