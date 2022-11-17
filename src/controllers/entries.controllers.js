@@ -87,6 +87,11 @@ const createLogIn = (req, res) => {
                 res.redirect('/entries')
             } 
 
+            //HACER UN ELSE, SI EXISTE NOMBRE ADMIN, INGRESAR A ADMIN
+            //Pagina de admin tendra dos botones, ver todas las solicitudes, ver activas, pasadas, o chart
+            //Se podria crear otro header para que diga administrator (igual podria haber headers personalizados para brigade y user)
+            //Y otro else, si no existe, salirse y volver a cargar 
+
     });
 
     console.log("error")
@@ -116,12 +121,14 @@ const createSignUp = (req, res) => {
         var sql ='INSERT INTO brigades (username, password) VALUES (?,?)'
         var params =[req.body.username, req.body.password]
         db.run(sql, params, function (err, result) {
-        if (err){
-            res.status(400).json({"error": err.message})
-            return;
-        }
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
         res.redirect('/log-in')
+        return
         });
+
 
     } else {
 
@@ -134,6 +141,7 @@ const createSignUp = (req, res) => {
             }
     
             res.redirect('/log-in')
+            return
         });
 
     };
