@@ -80,9 +80,11 @@ const createLogIn = (req, res) => {
             if (err){
                 res.status(400).json({"error": err.message})
                 return;
-            }
-    
-            if (JSON.stringify(rows).length > 2) {
+            } 
+
+            if (req.body.username == "admin" && req.body.password == "admin") {
+                res.redirect('/chart')
+            } else if (JSON.stringify(rows).length > 2) {
                 // Redirect to home page
                 res.redirect('/entries')
             } 
@@ -115,9 +117,8 @@ const createSignUp = (req, res) => {
     }
     console.log(req.body);
     console.log(req.body.brigadista);
-    /*
-    if (req.body.brigadista){
 
+    if (req.body.brigadista){
         //var sql ='INSERT INTO users (username, password, brigadista) VALUES (?,?,?)'
         var sql ='INSERT INTO brigades (username, password) VALUES (?,?)'
         var params =[req.body.username, req.body.password]
@@ -126,32 +127,31 @@ const createSignUp = (req, res) => {
                 res.status(400).json({"error": err.message})
                 return;
             }
-        res.redirect('/log-in')
-        return
+        res.redirect('/log-in');
+        return;
         });
 
 
     } else {
-        */
 
         var sql ='INSERT INTO users (username, password) VALUES (?,?)'
-        var params =[req.body.username, req.body.password]
+        var params =[req.body.username, req.body.password, req.body.brigadista]
         db.run(sql, params, function (err, result) {
             if (err){
                 res.status(400).json({"error": err.message})
                 return;
             }
     
-            res.redirect('/log-in')
-            return
+            res.redirect('/log-in');
+            return;
         });
 
-    //};
+    };
 };
 
 
 const renderChart = (req, res) => {
-    res.render('Chart')
+    res.render('chart')
 };
 
 const renderEntries = (req, res) => {
