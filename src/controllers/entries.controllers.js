@@ -31,22 +31,24 @@ const createNewEntry = (req, res) => {
         descripcion: req.body.descripcion,
         severidad: req.body.severidad,
         localizacion: req.body.localizacion,
-        published: new Date()
+        published: new Date(),
+        active: 1
     }
-/*
-    var sql ='INSERT INTO requests (username, description, severity, location, published) VALUES (?,?,?,?,?)'
-    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.localizacion,new Date()]
+    const d = new Date();
+
+    var sql ='INSERT INTO requests (username, description, severity, location, published, active) VALUES (?,?,?,?,?,?)'
+    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.localizacion,d.toString(), 1]
+
     db.run(sql, params, function (err, result) {
     if (err){
         res.status(400).json({"error": err.message})
         return;
     }
-    res.redirect('/entries')
+    res.redirect('/recibido')
     });
-*/
-    entries.push(newEntry);
+
+    //entries.push(newEntry);
     console.log(req.body);
-    res.redirect('/entries')
 
 };
 
@@ -87,7 +89,9 @@ const createLogIn = (req, res) => {
             } else if (JSON.stringify(rows).length > 2) {
                 // Redirect to home page
                 res.redirect('/entries')
-            } 
+            } else {
+                res.render('log-in')
+            }
 
             //HACER UN ELSE, SI EXISTE NOMBRE ADMIN, INGRESAR A ADMIN
             //Pagina de admin tendra dos botones, ver todas las solicitudes, ver activas, pasadas, o chart
@@ -122,6 +126,7 @@ const createSignUp = (req, res) => {
         //var sql ='INSERT INTO users (username, password, brigadista) VALUES (?,?,?)'
         var sql ='INSERT INTO brigades (username, password) VALUES (?,?)'
         var params =[req.body.username, req.body.password]
+        //tal vz db.run o db.each
         db.all(sql, params, function (err, result) {
             if (err){
                 res.status(400).json({"error": err.message})
@@ -155,12 +160,26 @@ const renderChart = (req, res) => {
 };
 
 const renderEntries = (req, res) => {
-    res.render('entries', {entries})
+    db.all('SELECT * FROM requests', [], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.render('entries', {entries:result})
+    });
 };
 
 //guardar los datos
 const createEntries = (req, res) => {
-    res.render('entries', {entries})
+    db.all('SELECT * FROM requests', [], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.render('entries', {entries:result})
+    });
 };
 
 module.exports = {
