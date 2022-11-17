@@ -33,6 +33,17 @@ const createNewEntry = (req, res) => {
         localizacion: req.body.localizacion,
         published: new Date()
     }
+/*
+    var sql ='INSERT INTO requests (username, description, severity, location, published) VALUES (?,?,?,?,?)'
+    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.localizacion,new Date()]
+    db.run(sql, params, function (err, result) {
+    if (err){
+        res.status(400).json({"error": err.message})
+        return;
+    }
+    res.redirect('/entries')
+    });
+*/
     entries.push(newEntry);
     console.log(req.body);
     res.redirect('/entries')
@@ -48,6 +59,7 @@ const createLogIn = (req, res) => {
     
     var sql ='SELECT * FROM users WHERE username = ? AND password = ?'
     var params =[req.body.username, req.body.password]
+
     db.all(sql, params, function(err, rows) {
     // If there is an issue with the query, output the error
         if (err){
@@ -57,34 +69,27 @@ const createLogIn = (req, res) => {
 
         if (JSON.stringify(rows).length > 2) {
             // Redirect to home page
-            res.render('new-entry')
-        } 	else {
+            res.redirect('/new-entry')
+        } 
+    });
 
-            var sql2 ='SELECT * FROM brigadista WHERE username = ? AND password = ?'
-            var params2 =[req.body.username, req.body.password]
-            db.all(sql2, params2, function(err, rows) {
-            // If there is an issue with the query, output the error
-                if (err){
-                    res.status(400).json({"error": err.message})
-                    return;
-                }
-        
-                if (JSON.stringify(rows).length > 2) {
-                    // Redirect to home page
-                    res.redirect('/entries');
-                } 	else {
-                    
-                    res.render('sign-up')
-                    console.log("error")
-                }
-        
-            });
-
-            res.render('sign-up')
-            console.log("error")
-        }
+    var sql ='SELECT * FROM brigades WHERE username = ? AND password = ?'
+        var params =[req.body.username, req.body.password]
+        db.all(sql, params, function(err, rows) {
+        // If there is an issue with the query, output the error
+            if (err){
+                res.status(400).json({"error": err.message})
+                return;
+            }
+    
+            if (JSON.stringify(rows).length > 2) {
+                // Redirect to home page
+                res.redirect('/entries')
+            } 
 
     });
+
+    console.log("error")
 };
 
 const renderRecived = (req, res) => {
@@ -104,8 +109,23 @@ const createSignUp = (req, res) => {
         brigadista: req.body.brigadista
     }
     console.log(req.body);
-    if (req.body.brigadista == null){
-        var sql ='INSERT INTO users (username, password, access) VALUES (?,?,?)'
+    console.log(req.body.brigadista);
+    if (req.body.brigadista){
+
+        //var sql ='INSERT INTO users (username, password, brigadista) VALUES (?,?,?)'
+        var sql ='INSERT INTO brigades (username, password) VALUES (?,?)'
+        var params =[req.body.username, req.body.password]
+        db.run(sql, params, function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+        res.redirect('/log-in')
+        });
+
+    } else {
+
+        var sql ='INSERT INTO users (username, password) VALUES (?,?)'
         var params =[req.body.username, req.body.password, req.body.brigadista]
         db.run(sql, params, function (err, result) {
             if (err){
@@ -115,17 +135,7 @@ const createSignUp = (req, res) => {
     
             res.redirect('/log-in')
         });
-    } else {
-            //var sql ='INSERT INTO users (username, password, brigadista) VALUES (?,?,?)'
-        var sql ='INSERT INTO brigadista (username, password, access) VALUES (?,?,?)'
-        var params =[req.body.username, req.body.password, req.body.brigadista]
-        db.run(sql, params, function (err, result) {
-        if (err){
-            res.status(400).json({"error": err.message})
-            return;
-        }
-        res.redirect('/log-in')
-        });
+
     };
 };
 
