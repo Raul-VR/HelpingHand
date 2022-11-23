@@ -199,9 +199,12 @@ const renderBrigade = (req, res) => {
         res.render('brigades', {brigades:result})
     });
         // If there is an issue with the query, output the error
+}
+const dropBrigade = (req, res) => {
     var sql ='DELETE FROM brigades WHERE brigadeID=?'
     var params=[req.body.brigadeID]
 }
+
 //guardar los datos
 const createEntries = (req, res) => {
     db.all('SELECT * FROM requests', [], function (err, result) {
@@ -228,5 +231,6 @@ module.exports = {
     renderChart, 
     createEntries, 
     renderEntries,
-    renderBrigade
+    renderBrigade,
+    dropBrigade
 }
