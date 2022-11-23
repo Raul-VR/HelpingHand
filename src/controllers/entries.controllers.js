@@ -190,9 +190,23 @@ const renderBrigade = (req, res) => {
         // If there is an issue with the query, output the error
 }
 const dropBrigade = (req, res) => {
-    var sql ='DELETE FROM brigades WHERE brigadeID=?'
-    var params=[req.body.brigadeID]
-}
+    var b=[req.body.brigadeID]
+    db.all('DELETE FROM brigades WHERE brigadeID=?', [b], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.redirect('brigades')
+    });
+};
+
+//Render-----Menu---Admin
+const renderAdmin = (req, res) => {
+    res.render('admin')
+};
+
+//------------
 
 const renderEntries = (req, res) => {
     db.all('SELECT * FROM requests WHERE active = ?', ["active"], function (err, result) {
@@ -234,5 +248,6 @@ module.exports = {
     createEntries, 
     renderEntries,
     renderBrigade,
-    dropBrigade
+    dropBrigade,
+    renderAdmin
 }

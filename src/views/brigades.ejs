@@ -16,22 +16,21 @@
         <%})%>
     
 
-    <form method="post"> <!--role="form"-->
-
-        <div class="form-group">
-            <label for ="title">brigadeID</label>
-            <input type="text" name="brigadeID" id="brigadeID" class="form-control" placeholder="Ingresa el ID a Borrar" required>
-        </div>
-
-        <div class="form-group  my-2 ">
-            <input type="submit" value="" class="btn btn-primary"
-        </div>
-
-    </form>
-
-
 <% } else {%>
     <p>No entries! <a href="/new-entry"> Add One!</a></p>
 <% } %>
+
+<form method="post"> <!--role="form"-->
+
+    <div class="form-group">
+        <label for ="title">brigadeID</label>
+        <input type="2" name="brigadeID" id="brigadeID" class="form-control" placeholder="Ingresa el ID a Borrar" required>
+    </div>
+
+    <div class="form-group  my-2 ">
+        <input type="submit" value="Borrar" class="btn btn-primary"
+    </div>
+
+</form>
 
 <%- include('partials/footer') %>
