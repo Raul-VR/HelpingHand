@@ -1,3 +1,4 @@
+//Volver a instalar 
 const express = require('express');
 const path = require('path');
 const morgan = require('morgan');
@@ -27,4 +28,15 @@ app.use((req, res) => {
 app.listen(app.get('port'), () => {
     console.log('Server on port:', app.get('port'))
 });
+
+//Get location
+const successCallback = (position) => {
+    console.log(position); //posicion 
+  };
+  
+  const errorCallback = (error) => {
+    console.log(error); //Error
+  };
+  
+  navigator.geolocation.getCurrentPosition(successCallback, errorCallback); //Callback
 
