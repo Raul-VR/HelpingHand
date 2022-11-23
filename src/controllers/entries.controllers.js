@@ -3,7 +3,7 @@ const entries = [];
 
 // Database
 const sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./data.db',sqlite3. OPEN_READWRITE ,(err) => {
+let db = new sqlite3.Database('./def_data_fr.db',sqlite3. OPEN_READWRITE ,(err) => {
     if(err){
         console.error(err.message);
     }
@@ -18,6 +18,7 @@ const createIndex = (req, res) => {
     res.redirect('log-in')
 
 };
+
 
 //ver el formulario
 const renderNewEntry = (req, res) => {
@@ -154,10 +155,25 @@ const createSignUp = (req, res) => {
     };
 };
 
-
-const renderChart = (req, res) => {
-    res.render('chart')
-};
+ const renderChart = (req, res) => {
+    db.serialize(()=>{
+        var a;
+        var b;
+        db.all('SELECT * FROM requests WHERE active= ?',["active"],(error, rows)=>{
+            if (error){
+                console.log(error);
+            }
+            a= rows.length;
+            db.all('SELECT * FROM requests WHERE active= ?', ["noactive"],(error,rows)=>{
+                if (error){
+                    console.log(error);
+                }
+                b=rows.length;
+                res.render('chart',{a:a,b:b}) //aquie enviamos los datos recabados el div del ejs
+            });
+        });
+    });
+ };
 
 const renderEntries = (req, res) => {
     db.all('SELECT * FROM requests', [], function (err, result) {
@@ -168,8 +184,24 @@ const renderEntries = (req, res) => {
 
         res.render('entries', {entries:result})
     });
+
+    
 };
 
+//--------------------------------------------
+const renderBrigade = (req, res) => {
+    db.all('SELECT * FROM brigades', [], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.render('brigades', {brigades:result})
+    });
+        // If there is an issue with the query, output the error
+    var sql ='DELETE FROM brigades WHERE brigadeID=?'
+    var params=[req.body.brigadeID]
+}
 //guardar los datos
 const createEntries = (req, res) => {
     db.all('SELECT * FROM requests', [], function (err, result) {
@@ -181,6 +213,7 @@ const createEntries = (req, res) => {
         res.render('entries', {entries:result})
     });
 };
+
 
 module.exports = {
     renderIndex,
@@ -194,5 +227,6 @@ module.exports = {
     createSignUp, 
     renderChart, 
     createEntries, 
-    renderEntries
+    renderEntries,
+    renderBrigade
 }

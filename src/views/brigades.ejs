@@ -1,0 +1,32 @@
+<%- include('partials/header') %>
+
+<%if (brigades.length) { %>
+
+
+    <div class="col-md-4 offset-md-4"> 
+        <% brigades.forEach(function(entry){ %>
+            <div class="card my-2">
+                <div class="card-header bg-primary text-white">
+                </div>
+                <div class="card-body">
+                    <p> <b>brigadeID:</b> <%= entry.brigadeID %></p>
+                    <p> <b>Username:</b> <%=entry.username %></p>
+                </div>
+            </div>
+        <%})%>
+    
+
+    <form method="post"> <!--role="form"-->
+        <div class="form-group">
+            <label for ="title">brigadeID</label>
+            <input type="text" name="brigadeID" id="brigadeID" class="form-control" placeholder="Ingresa el ID a Borrar" required>
+        </div>
+
+    </div>
+
+
+<% } else {%>
+    <p>No entries! <a href="/new-entry"> Add One!</a></p>
+<% } %>
+
+<%- include('partials/footer') %>
