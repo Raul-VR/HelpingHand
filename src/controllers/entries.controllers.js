@@ -37,8 +37,8 @@ const createNewEntry = (req, res) => {
     }
     const d = new Date();
 
-    var sql ='INSERT INTO requests (username, description, severity, location, published, active) VALUES (?,?,?,?,?,?)'
-    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.localizacion,d.toString(), 1]
+    var sql ='INSERT INTO requests (username, description, severity, latitude, longitude, published, active) VALUES (?,?,?,?,?,?,?)'
+    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.latitude, req.body.longitude, d.toString(), "active"]
 
     db.run(sql, params, function (err, result) {
     if (err){
@@ -175,18 +175,7 @@ const createSignUp = (req, res) => {
     });
  };
 
-const renderEntries = (req, res) => {
-    db.all('SELECT * FROM requests', [], function (err, result) {
-        if (err){
-            res.status(400).json({"error": err.message})
-            return;
-        }
 
-        res.render('entries', {entries:result})
-    });
-
-    
-};
 
 //--------------------------------------------
 const renderBrigade = (req, res) => {
@@ -205,9 +194,22 @@ const dropBrigade = (req, res) => {
     var params=[req.body.brigadeID]
 }
 
+const renderEntries = (req, res) => {
+    db.all('SELECT * FROM requests WHERE active = ?', ["active"], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.render('entries', {entries:result})
+    });
+
+    
+};
+
 //guardar los datos
 const createEntries = (req, res) => {
-    db.all('SELECT * FROM requests', [], function (err, result) {
+    db.all('SELECT * FROM requests WHERE active = ?', ["active"], function (err, result) {
         if (err){
             res.status(400).json({"error": err.message})
             return;
