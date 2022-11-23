@@ -188,6 +188,8 @@ const renderBrigade = (req, res) => {
         res.render('brigades', {brigades:result})
     });
         // If there is an issue with the query, output the error
+}
+const dropBrigade = (req, res) => {
     var sql ='DELETE FROM brigades WHERE brigadeID=?'
     var params=[req.body.brigadeID]
 }
@@ -231,5 +233,6 @@ module.exports = {
     renderChart, 
     createEntries, 
     renderEntries,
-    renderBrigade
+    renderBrigade,
+    dropBrigade
 }
