@@ -56,14 +56,12 @@
           
           latitude = position.coords.latitude.toString();
           longitude = position.coords.longitude.toString();
-          //const latitudeHtml = getElementById("latitude")
-          //const longitudeHtml = getElementById("longitude")
           
           x.innerHTML = "Localización<br>" + "Latitude: " + latitude + 
           "<br>Longitude: " + longitude;
 
-          latitudeHtml.value = position.coords.latitude.toString();
-          //x.value = 
+          document.getElementById("latitude").value = position.coords.latitude.toString();
+          document.getElementById("longitude").value = position.coords.longitude.toString();
         }
         </script>
 
