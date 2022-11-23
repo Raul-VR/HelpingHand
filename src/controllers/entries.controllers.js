@@ -38,7 +38,7 @@ const createNewEntry = (req, res) => {
     const d = new Date();
 
     var sql ='INSERT INTO requests (username, description, severity, location, published, active) VALUES (?,?,?,?,?,?)'
-    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.localizacion,d.toString(), 1]
+    var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.latitude,d.toString(), 1]
 
     db.run(sql, params, function (err, result) {
     if (err){
@@ -176,7 +176,7 @@ const createSignUp = (req, res) => {
  };
 
 const renderEntries = (req, res) => {
-    db.all('SELECT * FROM requests', [], function (err, result) {
+    db.all('SELECT * FROM requests WHERE active = 1', [], function (err, result) {
         if (err){
             res.status(400).json({"error": err.message})
             return;
@@ -204,7 +204,7 @@ const renderBrigade = (req, res) => {
 }
 //guardar los datos
 const createEntries = (req, res) => {
-    db.all('SELECT * FROM requests', [], function (err, result) {
+    db.all('SELECT * FROM requests WHERE active = 1', [], function (err, result) {
         if (err){
             res.status(400).json({"error": err.message})
             return;
