@@ -29,14 +29,38 @@ app.listen(app.get('port'), () => {
     console.log('Server on port:', app.get('port'))
 });
 
-//Get location
-const successCallback = (position) => {
-    console.log(position); //posicion 
-  };
-  
-  const errorCallback = (error) => {
-    console.log(error); //Error
-  };
-  
-  navigator.geolocation.getCurrentPosition(successCallback, errorCallback); //Callback
+// app.post('/chart', (req,res)=>{
+//     db.serialize(()=>{
+//         var a;
+//         var b;
+//         db.all('SELECT * FROM request WHERE active= ?', ["1"],(error, rows)=>{
+//             if (error){
+//                 console.log(error);
+//             }
+//             a= rows.lenght;
+//             db.all('SELECT * FROM request WHERE active= ?', ["0"],(error,rows)=>{
+//                 if (error){
+//                     console.log(error);
+//                 }
+//                 b=rows.lenght;
+//                 res.render('chart',{a:a,b:b}) //aquie enviamos los datos recabados el div del ejs
+//             });
+//         });
+//     });
+// });
 
+//Para la grafica 
+
+
+//Get location
+// const successCallback = (position) => {
+//     console.log(position); //posicion 
+//   };
+  
+//   const errorCallback = (error) => {
+//     console.log(error); //Error
+//   };
+  
+//   navigator.geolocation.getCurrentPosition(successCallback, errorCallback); //Callback
+
+//Obtener datos para nuestra Chart

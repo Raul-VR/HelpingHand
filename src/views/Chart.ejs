@@ -2,23 +2,44 @@
 
 
 <div>
-    <canvas id="myChart"></canvas>
+    <canvas id="myChart" height="250" width="300"></canvas>
   </div>
-  
+
+  <!-- For Serialization Function -->
+  <script type="text/javascript" src="http://form-serialize.googlecode.com/svn/trunk/serialize-0.2.min.js"></script>
+
+
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
+  <div id="a" data-x=<%= a %>></div> 
+  <div id="b" data-x=<%= b %>></div>
+
+  <div>
   <script>
+    var a= document.getElementById('a').dataset.x
+    var b= document.getElementById('b').dataset.x
+
     const ctx = document.getElementById('myChart');
   
     new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['16/11/2022', '17/11/2022', '18/11/2022'],
+        labels: ['Casos'],
         datasets: [{
+          backgrountColor:"red",
+          borderColor:"red",
           label: '# of Casos atendidos',
-          data: [20,19,5],
-          borderWidth: 5
-        }]
+          data: [a],
+          borderWidth: 1
+        },
+        {
+          backgrountColor:"cian",
+          borderColor:"blue",
+          label: '# of Casos no atendidos',
+          data: [b],
+          borderWidth: 1
+        }
+
+      ]
       },
       options: {
         scales: {
@@ -29,6 +50,6 @@
       }
     });
   </script>
-
+  </div>
 
 <%- include('partials/footer') %>
