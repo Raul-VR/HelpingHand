@@ -86,10 +86,10 @@ const createLogIn = (req, res) => {
             } 
 
             if (req.body.username == "admin" && req.body.password == "admin") {
-                res.redirect('/chart')
+                res.redirect('/admin')
             } else if (JSON.stringify(rows).length > 2) {
                 // Redirect to home page
-                res.redirect('/entries')
+                res.redirect('/brigade-menu')
             } else {
                 res.render('log-in')
             }
@@ -207,9 +207,10 @@ const renderAdmin = (req, res) => {
 };
 
 //------------
+//no importa
 
 const renderEntries = (req, res) => {
-    db.all('SELECT * FROM requests WHERE active = ?', ["active"], function (err, result) {
+    db.all('SELECT * FROM requests WHERE active = ?', ["noactive"], function (err, result) {
         if (err){
             res.status(400).json({"error": err.message})
             return;
@@ -222,6 +223,8 @@ const renderEntries = (req, res) => {
 };
 
 //guardar los datos
+
+
 const createEntries = (req, res) => {
     db.all('SELECT * FROM requests WHERE active = ?', ["active"], function (err, result) {
         if (err){
@@ -230,6 +233,34 @@ const createEntries = (req, res) => {
         }
 
         res.render('entries', {entries:result})
+    });
+};
+
+const createPastEntries = (req, res) => {
+    db.all('SELECT * FROM requests WHERE active = ?', ["noactive"], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.render('entries', {entries:result})
+    });
+};
+
+
+const renderBrigadeMenu = (req, res) => {
+    res.render('brigade-menu')
+};
+
+const createBrigadeMenu = (req, res) => {
+
+    var b=[req.body.requestID]
+    db.all('UPDATE requests SET active = "noactive" WHERE requestID = ?', [b], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+        res.redirect('brigade-menu')
     });
 };
 
@@ -249,5 +280,8 @@ module.exports = {
     renderEntries,
     renderBrigade,
     dropBrigade,
-    renderAdmin
+    renderAdmin, 
+    renderBrigadeMenu, 
+    createBrigadeMenu,
+    createPastEntries
 }
