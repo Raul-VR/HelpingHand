@@ -1,10 +1,10 @@
 <%- include('partials/header') %>
 
-
-<div>
-    <canvas id="myChart" height="250" width="300"></canvas>
-  </div>
-
+  <center>
+    <div>
+      <canvas id="myChart" height="500" width="500"></canvas>
+    </div>
+  </center>
   <!-- For Serialization Function -->
   <script type="text/javascript" src="http://form-serialize.googlecode.com/svn/trunk/serialize-0.2.min.js"></script>
 
@@ -18,7 +18,8 @@
     var a= document.getElementById('a').dataset.x
     var b= document.getElementById('b').dataset.x
 
-    const ctx = document.getElementById('myChart');
+    const ctx = document.getElementById('myChart').getContext("2d");
+
   
     new Chart(ctx, {
       type: 'bar',
@@ -42,6 +43,7 @@
       ]
       },
       options: {
+        responsive: false,
         scales: {
           y: {
             beginAtZero: true
