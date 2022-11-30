@@ -98,7 +98,8 @@ const createLogIn = (req, res) => {
                 // Redirect to home page
                 res.redirect('/brigade-menu')
             } else {
-                res.render('log-in')
+                res.render('log-in') 
+                
             }
 
             //HACER UN ELSE, SI EXISTE NOMBRE ADMIN, INGRESAR A ADMIN
