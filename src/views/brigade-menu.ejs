@@ -5,27 +5,27 @@
     <h2 class="text-center">Elige una opción</h2>
 
     <form action = "/entries" method="get">
-        <div class="form-group my-2">
-            <input type="submit" value="Solicitudes Activas" class="btn btn-danger"
-        </div>
+        <div class="text-center">
+            <input type="submit" value="Solicitudes Activas" class="btn btn-danger">
+        </div><br>
     </form>
     
     <form action = "/entries" method="post">
-        <div class="form-group my-2">
-            <input type="submit" value="Solicitudes Pasadas" class="btn btn-danger"
+        <div class="text-center">
+            <input type="submit" value="Solicitudes Pasadas" class="btn btn-danger">
         </div>
     </form>
 
-</div>
+</div> <br>
 
 <form method="post"> <!--role="form"-->
 
-    <div class="form-group">
+    <div class="col-md-4 offset-md-4">
         <label for ="title">¿Ya ayudaste? Desactiva la solicitud</label>
         <input type="2" name="requestID" id="requestID" class="form-control" placeholder="Ingresa el ID" required>
-    </div>
+    </div><br>
 
-    <div class="form-group  my-2 ">
+    <div class="col-md-4 offset-md-4">
         <input type="submit" value="Desactivar" class="btn btn-danger"
     </div>
 

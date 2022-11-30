@@ -27,25 +27,31 @@ const renderNewEntry = (req, res) => {
 
 //guardar los datos
 const createNewEntry = (req, res) => {
+
     const newEntry = {
         username: req.body.username,
         descripcion: req.body.descripcion,
         severidad: req.body.severidad,
         localizacion: req.body.localizacion,
+        password: req.body.password,
         published: new Date(),
         active: 1
     }
     const d = new Date();
+    const username = req.body.username;
 
     var sql ='INSERT INTO requests (username, description, severity, latitude, longitude, published, active) VALUES (?,?,?,?,?,?,?)'
     var params =[req.body.username, req.body.descripcion,req.body.severidad,req.body.latitude, req.body.longitude, d.toString(), "active"]
 
     db.run(sql, params, function (err, result) {
-    if (err){
-        res.status(400).json({"error": err.message})
-        return;
-    }
-    res.redirect('/recibido')
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+        //res.redirect('/recibido')
+
+
+        res.render('recibido', {entries: "Recibed", username: req.body.username, password: req.body.password } )
     });
 
     //entries.push(newEntry);
@@ -63,16 +69,17 @@ const createLogIn = (req, res) => {
     var sql ='SELECT * FROM users WHERE username = ? AND password = ?'
     var params =[req.body.username, req.body.password]
 
-    db.all(sql, params, function(err, rows) {
+    db.all(sql, params, function(err, result) {
     // If there is an issue with the query, output the error
         if (err){
             res.status(400).json({"error": err.message})
             return;
         }
 
-        if (JSON.stringify(rows).length > 2) {
+        if (JSON.stringify(result).length > 2) {
             // Redirect to home page
-            res.redirect('/new-entry')
+            //res.redirect('/new-entry')
+            res.render('new-entry', {entries: "Recibed", username: req.body.username, password: req.body.password })
         } 
     });
 
@@ -201,13 +208,37 @@ const dropBrigade = (req, res) => {
     });
 };
 
+//--------------------------------------------
+const renderUser = (req, res) => {
+    db.all('SELECT * FROM users', [], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.render('users', {users:result})
+    });
+        // If there is an issue with the query, output the error
+}
+const dropUser = (req, res) => {
+    var b=[req.body.userID]
+    db.all('DELETE FROM users WHERE userID=?', [b], function (err, result) {
+        if (err){
+            res.status(400).json({"error": err.message})
+            return;
+        }
+
+        res.redirect('users')
+    });
+};
+
 //Render-----Menu---Admin
 const renderAdmin = (req, res) => {
     res.render('admin')
 };
 
 //------------
-//no importa
+
 
 const renderEntries = (req, res) => {
     db.all('SELECT * FROM requests WHERE active = ?', ["noactive"], function (err, result) {
@@ -216,7 +247,7 @@ const renderEntries = (req, res) => {
             return;
         }
 
-        res.render('entries', {entries:result})
+        res.render('entries', {estado: "pasadas", entries:result}) //
     });
 
     
@@ -232,10 +263,11 @@ const createEntries = (req, res) => {
             return;
         }
 
-        res.render('entries', {entries:result})
+        res.render('entries', {estado: "activas", entries:result}) //
     });
 };
 
+//NO SE OCUPA
 const createPastEntries = (req, res) => {
     db.all('SELECT * FROM requests WHERE active = ?', ["noactive"], function (err, result) {
         if (err){
@@ -243,7 +275,7 @@ const createPastEntries = (req, res) => {
             return;
         }
 
-        res.render('entries', {entries:result})
+        res.render('entries', {entries:result, estado: ""} ) //
     });
 };
 
@@ -283,5 +315,7 @@ module.exports = {
     renderAdmin, 
     renderBrigadeMenu, 
     createBrigadeMenu,
-    createPastEntries
+    createPastEntries,
+    renderUser,
+    dropUser
 }

@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 
 
-const{ renderIndex, createIndex, renderNewEntry, createNewEntry, renderLogIn, createLogIn, renderRecived ,renderSignUp, createSignUp, renderChart, createEntries, renderEntries, renderBrigade,dropBrigade,renderAdmin, renderBrigadeMenu, createBrigadeMenu, createPastEntries} = require('../controllers/entries.controllers')
+const{ renderIndex, createIndex, renderNewEntry, createNewEntry, renderLogIn, createLogIn, renderRecived ,renderSignUp, createSignUp, renderChart, createEntries, renderEntries, renderBrigade,dropBrigade,renderAdmin, renderBrigadeMenu, createBrigadeMenu, createPastEntries, renderUser, dropUser} = require('../controllers/entries.controllers')
 
 router.get('/', renderIndex);
 router.post('/', createIndex);
@@ -27,6 +27,9 @@ router.get('/chart', renderChart);
 
 router.get('/brigades', renderBrigade);
 router.post('/brigades', dropBrigade);
+
+router.get('/users', renderUser);
+router.post('/users', dropUser);
 
 router.get('/brigade-menu', renderBrigadeMenu);
 router.post('/brigade-menu', createBrigadeMenu);

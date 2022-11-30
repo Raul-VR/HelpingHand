@@ -1,17 +1,19 @@
 <%- include('partials/header') %>
 
 <div style="text-align:center;width: 500px;margin: 0 auto">
-    <h2 class="text-center">Tu solicitud ha sido recibida!</h2><br>
+    <h2 class="text-center"> <p> <%= username %></p> Tu solicitud ha sido recibida!</h2><br>
 
     </form>
 </div>
 
-
+<form action = "/log-in" method="post">
+    <input type="hidden" id="username" name="username" value="<%= username %>" />
+    <input type="hidden" id="password" name="password" value="<%= password %>" />
 
 <div style="text-align:center;width: 500px;margin: 0 auto">
-    <a href="/new-entry" class="btn btn-danger" > Realizar otra </a>
-
-    </form>
+    <input type="submit" value="Realizar otra" class="btn btn-danger"
 </div>
+
+</form>
 
 <%- include('partials/footer') %>
